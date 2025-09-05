@@ -29,7 +29,7 @@ mongoose.connect(uri).then(() => console.log("Connected to database"))
 
 export const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173","https://c7jh8bc2-5173.uks1.devtunnels.ms/"], // your React app URL
+    origin: ["http://localhost:5173","https://briva-chatmessage.netlify.app"], // your React app URL
     methods: ["GET", "POST"]
   }
 });
