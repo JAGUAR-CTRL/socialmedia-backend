@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
     console.log(socket.id + " connected")
     socket.on("enter-room", async ({room}) => {
         if(!socket.user){
-            return socket.emit("error", {message: "Unauthorized.Please refresh and log back in again"});
+            return socket.emit("error", {message: "Unauthorized.Please refresh or log in again"});
         }
     await socket.join(room);
        try {
@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
 
     socket.on("create-room", async ({room}) => {
         if(!socket.user){
-            return socket.emit("error", {message: "Unauthorized.Please login first"});
+            return socket.emit("error", {message: "Unauthorized.Please refresh or log in again"});
         }
         room = room.split(" ").join("-")
         const roomToEnter = await Room.findOne({roomCode: room});
@@ -107,7 +107,7 @@ io.on("connection", (socket) => {
     })
     socket.on("send-message",async ({message, room, roomCode}) => {
         if(!socket.user){
-            return socket.emit("error", {message: "Unauthorized.Please login first"});
+            return socket.emit("error", {message: "Unauthorized.Please refresh or log in again"});
         }
         const newMessage = await new Message({
             content: message,
