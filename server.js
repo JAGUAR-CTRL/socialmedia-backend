@@ -36,7 +36,7 @@ export const io = new Server(httpServer, {
 
 io.use(async (socket, next) => {
    try {
-     const token = socket.handshake.auth.token;
+     const token = socket.handshake.auth?.token;
      if(!token){
          console.log('Guest connection');
          socket.user = null;
@@ -53,6 +53,9 @@ io.use(async (socket, next) => {
 io.on("connection", (socket) => {
     console.log(socket.id + " connected")
     socket.on("enter-room", async ({room}) => {
+        if(!socket.user){
+            return socket.emit("error", {message: "Unauthorized.Please login first"});
+        }
     await socket.join(room);
        try {
          const roomToEnter = await Room.findOne({roomCode: room});
@@ -70,6 +73,9 @@ io.on("connection", (socket) => {
     })
 
     socket.on("create-room", async ({room}) => {
+        if(!socket.user){
+            return socket.emit("error", {message: "Unauthorized.Please login first"});
+        }
         room = room.split(" ").join("-")
         const roomToEnter = await Room.findOne({roomCode: room});
         await socket.join(room);
@@ -100,6 +106,9 @@ io.on("connection", (socket) => {
         await socket.join(room)
     })
     socket.on("send-message",async ({message, room, roomCode}) => {
+        if(!socket.user){
+            return socket.emit("error", {message: "Unauthorized.Please login first"});
+        }
         const newMessage = await new Message({
             content: message,
             author: socket.user.id,
