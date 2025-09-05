@@ -18,7 +18,7 @@ const uri = process.env.MONGO_URI;
 const app = express();
 const httpServer = http.createServer(app);
 app.use(cors({
-    origin: ["https://briva-chatmessage.netlify.app/","http://localhost:5173"],
+    origin: ["https://briva-chatmessage.netlify.app","http://localhost:5173"],
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"]
 }));
 app.use(express.json());
