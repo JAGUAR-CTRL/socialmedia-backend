@@ -18,7 +18,7 @@ const uri = process.env.MONGO_URI;
 const app = express();
 const httpServer = http.createServer(app);
 app.use(cors({
-    origin: ["https://briva-chatmessage.netlify.app","http://localhost:5173"],
+    origin: "https://briva-chatmessage.netlify.app",
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"]
 }));
 app.use(express.json());
@@ -29,7 +29,7 @@ mongoose.connect(uri).then(() => console.log("Connected to database"))
 
 export const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173","https://briva-chatmessage.netlify.app"], // your React app URL
+    origin: "https://briva-chatmessage.netlify.app", // your React app URL
     methods: ["GET", "POST"]
   }
 });
