@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
     console.log(socket.id + " connected")
     socket.on("enter-room", async ({room}) => {
         if(!socket.user){
-            return socket.emit("error", {message: "Unauthorized.Please login first"});
+            return socket.emit("error", {message: "Unauthorized.Please refresh and log back in again"});
         }
     await socket.join(room);
        try {
